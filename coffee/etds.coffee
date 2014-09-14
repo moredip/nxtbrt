@@ -1,6 +1,5 @@
 ETD_URL = "http://api.bart.gov/api/etd.aspx"
 API_KEY="MW9S-E7SL-26DU-VV8V"
-# STATIONS_URL = "http://api.bart.gov/api/etd.aspx?cmd=etd&orig=RICH&key="
 
 parseMinutes = (minutesString)->
   mins = parseInt(minutesString)
@@ -22,6 +21,9 @@ parseEtds = (doc)->
     a.minutes - b.minutes
   allEstimates
 
+loadEtds = (station)->
+  Q($.get( ETD_URL, {cmd: 'etd', orig: station, key: API_KEY} ))
+    .then(parseEtds)
 
 displayEtds = (estimates)->
   $list = $("<ul>")
@@ -32,6 +34,7 @@ displayEtds = (estimates)->
 
 window.NxtBrt ?= {}
 window.NxtBrt.displayEtdsFor = (stationAbbr)->
-  Q($.get( ETD_URL, {cmd: 'etd', orig: stationAbbr, key: API_KEY} ))
-    .then( parseEtds )
+  NxtBrt.showToast('finding departure times...')
+  loadEtds(stationAbbr)
     .then( displayEtds )
+    .then( NxtBrt.hideToast )

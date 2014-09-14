@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     coffee = require('gulp-coffee'),
+    sourcemaps = require('gulp-sourcemaps'),
     concat = require('gulp-concat'),
     del = require('del');
 
@@ -13,8 +14,8 @@ gulp.task('coffee', function () {
     .pipe(plumber())
     //.pipe(sourcemaps.init())
     .pipe(coffee())
-    //.pipe(sourcemaps.write())
     .pipe(concat('app.js'))
+    //.pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('public'));
 });
 

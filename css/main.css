@@ -6,6 +6,19 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
+#toast-notice {
+  text-align: center;
+  background: rgb(70,127,212);
+  color: white;
+  margin: 0;
+  padding: 0.3em 0;
+  font-size: 1.6rem;
+}
+
+#toast-notice { display: none; }
+#toast-notice.show { display: inherit } 
+
 ul {
   list-style: none;
   margin: 0;
