@@ -33,8 +33,8 @@ displayEtds = (estimates)->
 
 
 window.NxtBrt ?= {}
-window.NxtBrt.displayEtdsFor = (station)->
+window.NxtBrt.displayEtdsFor = (stationAbbr)->
   NxtBrt.showToast('finding departure times...')
-  loadEtds(station.abbr)
+  loadEtds(stationAbbr)
     .then( displayEtds )
     .then( NxtBrt.hideToast )

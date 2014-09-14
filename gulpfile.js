@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     download = require('gulp-download'),
     concat = require('gulp-concat'),
     rename = require('gulp-rename'),
+    inject = require('gulp-inject'),
     del = require('del'),
     bartStations = require('./gulp/bart-stations');
 
@@ -25,7 +26,6 @@ gulp.task('coffee', function () {
 
 gulp.task('copy', function () {
   var inputs = [
-    'index.html',
     'css/*.css',
     'node_modules/jquery/dist/jquery.*',
     'node_modules/q/q.js'
@@ -41,7 +41,24 @@ gulp.task('stations', function () {
     .pipe(gulp.dest('public'));
 });
 
-gulp.task('default', ['coffee','copy']);
+gulp.task('injected-index', function () {
+  var stationsJson = download("http://api.bart.gov/api/stn.aspx?cmd=stns&key=MW9S-E7SL-26DU-VV8V")
+    .pipe(bartStations());
+
+  var injector = inject(stationsJson,{
+    starttag: '/*_inject:stations_*/',
+    endtag: '/*_endinject_*/',
+    transform: function (filePath, file) {
+      return "STATIONS: "+file.contents.toString('utf8')
+    }
+  });
+
+  gulp.src('index.html')
+    .pipe(injector)
+    .pipe(gulp.dest('public'));
+});
+
+gulp.task('default', ['injected-index','coffee','copy']);
 
 gulp.task('watch', ['default'], function(){
   gulp.watch(['index.html','css/*.css'], ['copy']);

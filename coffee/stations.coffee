@@ -1,5 +1,3 @@
-STATIONS_URL = "http://api.bart.gov/api/stn.aspx?cmd=stns&key=MW9S-E7SL-26DU-VV8V"
-
 MAX_GEOLOCATION_STALENESS = 300000 #5 minutes
 
 getCurrentPosition = (options={})->
@@ -11,21 +9,7 @@ getCurrentPosition = (options={})->
   )
   deferred.promise
 
-
-parseStationNode = (stationNode)->
-  pluckText = (tagName)-> pluckTextFromNode(stationNode, tagName)
-  {
-    name: pluckText('name')
-    abbr: pluckText('abbr')
-    lat: pluckText('gtfs_latitude')
-    long: pluckText('gtfs_longitude')
-  }
-
-loadStations = ->
-  Q($.ajax(STATIONS_URL)).then (doc)->
-    ( parseStationNode(s) for s in doc.getElementsByTagName("station") )
-
-displayStations = (stations)->
+renderStations = (stations)->
   $list = $("<ul>")
   stations.forEach (s)->
     a = $("<a href='##{s.abbr}'>").text(s.name)
@@ -33,10 +17,7 @@ displayStations = (stations)->
 
   $('.stations').empty().append($list).show()
 
-clearStations = ()->
-  $('.stations').empty()
-
-sortStationsByProximity = (stations,position)->
+stationsSortedByProximity = (stations,position)->
   currLocation = {
     lat: position.coords.latitude,
     long: position.coords.longitude
@@ -59,16 +40,13 @@ arrangeStationsByProximityOnceArrived = (stations)->
 
 window.NxtBrt ?= {}
 window.NxtBrt.displayStations = ->
-  clearStations()
-  NxtBrt.showToast('loading stations...')
+  stations = NxtBrt.STATIONS
+  renderStations( stations )
 
-  stations = loadStations()
+  NxtBrt.showToast('finding stations nearest you...')
 
-  stations.then(displayStations)
-    .then ->
-      NxtBrt.showToast('finding stations nearest you...')
-
-  arrangeStationsByProximityOnceArrived(stations)
-    .then(displayStations)
+  getCurrentPosition(maximumAge:MAX_GEOLOCATION_STALENESS)
+    .then( (position)-> stationsSortedByProximity(stations,position) )
+    .then( renderStations )
     .then ->
       NxtBrt.hideToast()
