@@ -23,7 +23,7 @@ gulp.task('copy', function () {
   var inputs = [
     'index.html',
     'css/*.css',
-    'node_modules/jquery/dist/jquery.min.*',
+    'node_modules/jquery/dist/jquery.*',
     'node_modules/q/q.js'
   ];
   gulp.src(inputs)

@@ -3,7 +3,7 @@ API_KEY="MW9S-E7SL-26DU-VV8V"
 
 parseMinutes = (minutesString)->
   mins = parseInt(minutesString)
-  if Number.isNaN(mins) then 0 else mins
+  if isNaN(mins) then 0 else mins
 
 parseEtds = (doc)->
   allEstimates = []
