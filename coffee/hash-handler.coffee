@@ -11,21 +11,14 @@ parseEtds = (doc)->
       for estimates in etd.getElementsByTagName('estimate')
         allEstimates.push(
           dest: dest
-          minutes: pluckTextFromNode(estimates,'minutes')
+          minutes: parseInt(pluckTextFromNode(estimates,'minutes'))
           platform: pluckTextFromNode(estimates,'minutes')
           length: pluckTextFromNode(estimates,'length')
         )
+  allEstimates.sort (a,b)->
+    a.minutes - b.minutes
   allEstimates
-  [
-    {
-      dest: "FOO",
-      minutes: "12"
-    },
-    {
-      dest: "BAR",
-      minutes: "22"
-    }
-  ]
+
 
 displayEtds = (estimates)->
   $list = $("<ul>")
