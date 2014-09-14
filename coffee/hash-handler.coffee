@@ -16,20 +16,35 @@ parseEtds = (doc)->
           length: pluckTextFromNode(estimates,'length')
         )
   allEstimates
+  [
+    {
+      dest: "FOO",
+      minutes: "12"
+    },
+    {
+      dest: "BAR",
+      minutes: "22"
+    }
+  ]
 
+displayEtds = (estimates)->
+  $list = $("<ul>")
+  estimates.forEach (e)->
+    $("<li>").text("#{e.dest}: #{e.minutes}").appendTo($list)
+  $('.etds').empty().append($list)
 
 etdsForStation = (stationAbbr)->
   Q($.get( ETD_URL, {cmd: 'etd', orig: stationAbbr, key: API_KEY} ))
     .then( parseEtds )
-    .then (a,b,c)->
-      debugger
 
 handleHash = ->
   station = window.location.hash.substring(1)
   return if station == ""
 
-  etdsForStation(station).then (etds)->
-    debugger
+  etdsForStation(station)
+    .then( displayEtds )
+    .then ->
+      $('.stations').hide()
 
 window.onhashchange = handleHash
 $(handleHash)

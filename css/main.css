@@ -12,7 +12,7 @@ ul {
   padding: 0;
 }
 
-.stations {
+.stations, .etds {
   font-size: 20pt;
 }
 
