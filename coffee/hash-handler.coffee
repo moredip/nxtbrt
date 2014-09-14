@@ -2,6 +2,9 @@ ETD_URL = "http://api.bart.gov/api/etd.aspx"
 API_KEY="MW9S-E7SL-26DU-VV8V"
 # STATIONS_URL = "http://api.bart.gov/api/etd.aspx?cmd=etd&orig=RICH&key="
 
+parseMinutes = (minutesString)->
+  mins = parseInt(minutesString)
+  if Number.isNaN(mins) then 0 else mins
 
 parseEtds = (doc)->
   allEstimates = []
@@ -11,7 +14,7 @@ parseEtds = (doc)->
       for estimates in etd.getElementsByTagName('estimate')
         allEstimates.push(
           dest: dest
-          minutes: parseInt(pluckTextFromNode(estimates,'minutes'))
+          minutes: parseMinutes(pluckTextFromNode(estimates,'minutes'))
           platform: pluckTextFromNode(estimates,'minutes')
           length: pluckTextFromNode(estimates,'length')
         )
