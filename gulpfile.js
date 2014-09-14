@@ -61,6 +61,6 @@ gulp.task('injected-index', function () {
 gulp.task('default', ['injected-index','coffee','copy']);
 
 gulp.task('watch', ['default'], function(){
-  gulp.watch(['index.html','css/*.css'], ['copy']);
+  gulp.watch(['css/*.css'], ['copy']);
   gulp.watch(['coffee/*.coffee'], ['coffee']);
 });

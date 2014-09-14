@@ -30,10 +30,13 @@ ul {
 }
 
 li {
-  text-align: center;
   padding: 0.5em 0;
+  text-align: center;
   border-bottom: 1pt solid black;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+li > a {
+  display: block;
 }
