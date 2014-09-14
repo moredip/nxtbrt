@@ -1,0 +1,22 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stations {
+  font-size: 20pt;
+}
+
+li {
+  text-align: center;
+  padding: 0.5em 0;
+  border-bottom: 1pt solid black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
