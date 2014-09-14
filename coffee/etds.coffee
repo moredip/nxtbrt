@@ -27,20 +27,11 @@ displayEtds = (estimates)->
   $list = $("<ul>")
   estimates.forEach (e)->
     $("<li>").text("#{e.dest}: #{e.minutes}").appendTo($list)
-  $('.etds').empty().append($list)
+  $('.etds').empty().append($list).show()
 
-etdsForStation = (stationAbbr)->
+
+window.NxtBrt ?= {}
+window.NxtBrt.displayEtdsFor = (stationAbbr)->
   Q($.get( ETD_URL, {cmd: 'etd', orig: stationAbbr, key: API_KEY} ))
     .then( parseEtds )
-
-handleHash = ->
-  station = window.location.hash.substring(1)
-  return if station == ""
-
-  etdsForStation(station)
     .then( displayEtds )
-    .then ->
-      $('.stations').hide()
-
-window.onhashchange = handleHash
-$(handleHash)

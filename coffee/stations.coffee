@@ -10,7 +10,8 @@ parseStationNode = (stationNode)->
   }
 
 
-$ ->
+window.NxtBrt ?= {}
+window.NxtBrt.displayStations = ->
   stations = Q($.ajax(STATIONS_URL)).then (doc)->
     ( parseStationNode(s) for s in doc.getElementsByTagName("station") )
 
@@ -20,4 +21,4 @@ $ ->
       a = $("<a href='##{s.abbr}'>").text(s.name)
       $("<li>").append(a).appendTo($list)
 
-    $('.stations').append($list)
+    $('.stations').append($list).show()
