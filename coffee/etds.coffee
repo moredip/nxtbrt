@@ -21,8 +21,8 @@ parseEtds = (doc)->
     a.minutes - b.minutes
   allEstimates
 
-loadEtds = (station)->
-  Q($.get( ETD_URL, {cmd: 'etd', orig: station, key: API_KEY} ))
+loadEtds = (stationAbbr)->
+  Q($.get( ETD_URL, {cmd: 'etd', orig: stationAbbr, key: API_KEY} ))
     .then(parseEtds)
 
 displayEtds = (estimates)->
@@ -33,8 +33,8 @@ displayEtds = (estimates)->
 
 
 window.NxtBrt ?= {}
-window.NxtBrt.displayEtdsFor = (stationAbbr)->
+window.NxtBrt.displayEtdsFor = (station)->
   NxtBrt.showToast('finding departure times...')
-  loadEtds(stationAbbr)
+  loadEtds(station.abbr)
     .then( displayEtds )
     .then( NxtBrt.hideToast )

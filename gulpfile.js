@@ -2,8 +2,12 @@ var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     coffee = require('gulp-coffee'),
     sourcemaps = require('gulp-sourcemaps'),
+    download = require('gulp-download'),
     concat = require('gulp-concat'),
-    del = require('del');
+    rename = require('gulp-rename'),
+    del = require('del'),
+    bartStations = require('./gulp/bart-stations');
+
 
 gulp.task('clean', function (cb) {
   del(['public'],cb);
@@ -27,6 +31,13 @@ gulp.task('copy', function () {
     'node_modules/q/q.js'
   ];
   gulp.src(inputs)
+    .pipe(gulp.dest('public'));
+});
+
+gulp.task('stations', function () {
+  download("http://api.bart.gov/api/stn.aspx?cmd=stns&key=MW9S-E7SL-26DU-VV8V")
+    .pipe(bartStations())
+    .pipe(rename('stations.json'))
     .pipe(gulp.dest('public'));
 });
 
