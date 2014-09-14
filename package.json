@@ -1,0 +1,15 @@
+{
+  "name": "nxtbrt",
+  "version": "0.0.1",
+  "author": "Pete Hodgson",
+  "devDependencies": {
+    "del": "~0.1.3",
+    "gulp-concat": "~2.4.0",
+    "coffee": "0.0.1",
+    "gulp-coffee": "~2.2.0",
+    "gulp": "~3.8.8",
+    "gulp-plumber": "~0.6.5",
+    "jquery": "~2.1.1",
+    "q": "~1.0.1"
+  }
+}
