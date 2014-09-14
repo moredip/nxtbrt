@@ -1,8 +1,5 @@
 STATIONS_URL = "http://api.bart.gov/api/stn.aspx?cmd=stns&key=MW9S-E7SL-26DU-VV8V"
 
-pluckTextFromNode = (node,tagName)->
-  node.getElementsByTagName(tagName)[0].textContent
-
 parseStationNode = (stationNode)->
   pluckText = (tagName)-> pluckTextFromNode(stationNode, tagName)
   {
@@ -20,9 +17,7 @@ $ ->
   stations.then (stations)->
     $list = $("<ul>")
     stations.forEach (s)->
-      $("<li>").text(s.name).appendTo($list)
+      a = $("<a href='##{s.abbr}'>").text(s.name)
+      $("<li>").append(a).appendTo($list)
 
     $('.stations').append($list)
-
-
-
