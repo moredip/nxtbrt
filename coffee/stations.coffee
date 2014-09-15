@@ -7,6 +7,13 @@ getCurrentPosition = (options={})->
     deferred.reject,
     options
   )
+  ga('send', 'event', 'geolocate', 'start')
+  deferred.promise
+    .then ->
+      ga('send', 'event', 'geolocate', 'success')
+    .catch (e)->
+      ga('send', 'event', 'geolocate', "failure-#{e.code}", e.message)
+
   deferred.promise
 
 renderStations = (stations)->
@@ -31,12 +38,6 @@ stationsSortedByProximity = (stations,position)->
   stationsWithDistance.sort (a,b)->
     a.distance - b.distance
   stationsWithDistance
-
-arrangeStationsByProximityOnceArrived = (stations)->
-  position = getCurrentPosition(maximumAge:MAX_GEOLOCATION_STALENESS)
-
-  Q.all([stations,position])
-    .spread(sortStationsByProximity)
 
 window.NxtBrt ?= {}
 window.NxtBrt.displayStations = ->
