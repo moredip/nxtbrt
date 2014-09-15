@@ -50,3 +50,6 @@ window.NxtBrt.displayStations = ->
     .then( renderStations )
     .then ->
       NxtBrt.hideToast()
+
+window.NxtBrt.lookupStationByAbbr = (abbr)->
+  _.find( NxtBrt.STATIONS, (s)-> s.abbr == abbr )

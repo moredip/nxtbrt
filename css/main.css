@@ -29,10 +29,15 @@ ul {
   font-size: 20pt;
 }
 
+.etds h1 {
+  font-size: 1.4em;
+  text-align: center;
+}
+
 li {
   padding: 0.5em 0;
   text-align: center;
-  border-bottom: 1pt solid black;
+  border-top: 1pt solid black;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

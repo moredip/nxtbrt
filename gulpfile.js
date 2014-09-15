@@ -28,7 +28,8 @@ gulp.task('copy', function () {
   var inputs = [
     'css/*.css',
     'node_modules/jquery/dist/jquery.*',
-    'node_modules/q/q.js'
+    'node_modules/q/q.js',
+    'node_modules/underscore/underscore-min.js'
   ];
   gulp.src(inputs)
     .pipe(gulp.dest('public'));

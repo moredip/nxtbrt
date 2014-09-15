@@ -25,16 +25,27 @@ loadEtds = (stationAbbr)->
   Q($.get( ETD_URL, {cmd: 'etd', orig: stationAbbr, key: API_KEY} ))
     .then(parseEtds)
 
-displayEtds = (estimates)->
+displayJustStationName = (stationName)->
+  $('.etds')
+    .empty()
+    .append( $('<h1>').text(stationName) )
+    .show()
+
+appendEtds = (estimates)->
   $list = $("<ul>")
   estimates.forEach (e)->
     $("<li>").text("#{e.dest}: #{e.minutes}").appendTo($list)
-  $('.etds').empty().append($list).show()
+  $('.etds')
+    .append($list)
 
 
 window.NxtBrt ?= {}
 window.NxtBrt.displayEtdsFor = (stationAbbr)->
+  station = NxtBrt.lookupStationByAbbr(stationAbbr)
+
+  displayJustStationName(station.name)
+
   NxtBrt.showToast('finding departure times...')
   loadEtds(stationAbbr)
-    .then( displayEtds )
+    .then( appendEtds )
     .then( NxtBrt.hideToast )
