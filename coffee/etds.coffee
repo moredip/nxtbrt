@@ -9,12 +9,13 @@ parseEtds = (doc)->
   allEstimates = []
   for etd in doc.getElementsByTagName('etd')
     do (etd)->
-      dest = pluckTextFromNode(etd, 'abbreviation')
+      destAbbr = pluckTextFromNode(etd, 'abbreviation')
+      destStation = NxtBrt.lookupStationByAbbr(destAbbr)
       for estimates in etd.getElementsByTagName('estimate')
         allEstimates.push(
-          dest: dest
+          dest: destStation
           minutes: parseMinutes(pluckTextFromNode(estimates,'minutes'))
-          platform: pluckTextFromNode(estimates,'minutes')
+          lineColor: pluckTextFromNode(estimates,'color').toLowerCase()
           length: pluckTextFromNode(estimates,'length')
         )
   allEstimates.sort (a,b)->
@@ -34,7 +35,11 @@ displayJustStationName = (stationName)->
 appendEtds = (estimates)->
   $list = $("<ul>")
   estimates.forEach (e)->
-    $("<li>").text("#{e.dest}: #{e.minutes}").appendTo($list)
+    $("<li>")
+      .text("#{e.dest.name}: #{e.minutes}")
+      .addClass("line-#{e.lineColor}")
+      .appendTo($list)
+
   $('.etds')
     .append($list)
 
