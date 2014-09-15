@@ -29,7 +29,9 @@ loadEtds = (stationAbbr)->
 displayJustStationName = (stationName)->
   $('.etds')
     .empty()
-    .append( $('<h1>').text(stationName) )
+    .append( 
+      $('<h1>').append( $("<a>").attr("href","#").text(stationName) )
+    )
     .show()
 
 appendEtds = (estimates)->
