@@ -34,11 +34,19 @@ displayJustStationName = (stationName)->
     )
     .show()
 
+humanMinutes = (min)->
+  if min == 0
+    "now"
+  else if min == 1
+    "1 min"
+  else
+    "#{min} mins"
+
 appendEtds = (estimates)->
   $list = $("<ul>")
   estimates.forEach (e)->
     $("<li>")
-      .text("#{e.dest.name}: #{e.minutes}")
+      .text("#{e.dest.name}: #{humanMinutes(e.minutes)}")
       .addClass("line-#{e.lineColor}")
       .appendTo($list)
 
