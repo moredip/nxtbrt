@@ -6,9 +6,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     rename = require('gulp-rename'),
     inject = require('gulp-inject'),
-    react = require('gulp-react'),
     del = require('del'),
-    merge = require('merge-stream'),
     bartStations = require('./gulp/bart-stations');
 
 
@@ -17,15 +15,9 @@ gulp.task('clean', function (cb) {
 });
 
 gulp.task('build-js', function () {
-    var coffeeFiles = gulp.src('coffee/*.coffee')
+    var coffeeFiles = gulp.src('coffee/**/*.coffee')
       .pipe(plumber())
-      .pipe(coffee());
-
-    var jsx = gulp.src('jsx/*.jsx')
-      .pipe(plumber())
-      .pipe(react());
-
-    merge(coffeeFiles,jsx)
+      .pipe(coffee())
       .pipe(concat('app.js'))
       .pipe(gulp.dest('public'));
 });
@@ -72,5 +64,5 @@ gulp.task('default', ['injected-index','build-js','copy']);
 gulp.task('watch', ['default'], function(){
   gulp.watch(['css/*.css'], ['copy']);
   gulp.watch(['index.html'], ['injected-index']);
-  gulp.watch(['coffee/*.coffee','jsx/*.jsx'], ['build-js']);
+  gulp.watch(['coffee/**/*.coffee'], ['build-js']);
 });
