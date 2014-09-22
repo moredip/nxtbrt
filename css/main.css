@@ -25,7 +25,7 @@ ul {
   padding: 0;
 }
 
-#stations, .etds {
+#stations, #etds {
   font-size: 20pt;
 }
 
@@ -41,16 +41,16 @@ li > a {
   display: block;
 }
 
-.etds h1 {
+#etds h1 {
   font-size: 1.4em;
   text-align: center;
 }
 
-.etds li.line-red { background-color: #e11a57;  }
-.etds li.line-orange { background-color: #f9a11d; }
-.etds li.line-yellow { background-color: #fdf057; }
-.etds li.line-green { background-color: #4fb848; }
-.etds li.line-blue { background-color: #2aabe2; }
+#etds li.line-red { background-color: #e11a57;  }
+#etds li.line-orange { background-color: #f9a11d; }
+#etds li.line-yellow { background-color: #fdf057; }
+#etds li.line-green { background-color: #4fb848; }
+#etds li.line-blue { background-color: #2aabe2; }
 
-.etds li { border-top: 1pt solid white; }
+#etds li { border-top: 1pt solid white; }
 #stations li { border-top: 1pt solid black; }

@@ -4,8 +4,9 @@ if (window.NxtBrt == null) window.NxtBrt = {};
 
   var Estimate = React.createClass({
     render: function(){
+      var lineClass = "line-"+this.props.lineColor;
       return (
-        <li>
+        <li className={lineClass}>
           {this.props.dest}: {NxtBrt.humanMinutes(this.props.minutes)}
         </li>
       );
