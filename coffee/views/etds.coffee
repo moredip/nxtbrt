@@ -2,9 +2,17 @@ window.NxtBrt ?= {}
 
 D = React.DOM
 
+humanMinutes = (min)->
+  if min == 0
+    "now"
+  else if min == 1
+    "1 min"
+  else
+    "#{min} mins"
+
 Estimate = React.createClass
   render: ->
-    mins = NxtBrt.humanMinutes(@props.minutes)
+    mins = humanMinutes(@props.minutes)
     (D.li className:"line-"+@props.lineColor,
       "#{@props.dest}: #{mins}"
     )

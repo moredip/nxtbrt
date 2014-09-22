@@ -1,14 +1,5 @@
 window.NxtBrt ?= {}
 
-window.NxtBrt.humanMinutes = (min)->
-  if min == 0
-    "now"
-  else if min == 1
-    "1 min"
-  else
-    "#{min} mins"
-
-
 window.NxtBrt.displayEtdsFor = (stationAbbr)->
   station = NxtBrt.lookupStationByAbbr(stationAbbr)
 
