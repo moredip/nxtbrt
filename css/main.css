@@ -25,7 +25,7 @@ ul {
   padding: 0;
 }
 
-.stations, .etds {
+#stations, .etds {
   font-size: 20pt;
 }
 
@@ -53,4 +53,4 @@ li > a {
 .etds li.line-blue { background-color: #2aabe2; }
 
 .etds li { border-top: 1pt solid white; }
-.stations li { border-top: 1pt solid black; }
+#stations li { border-top: 1pt solid black; }

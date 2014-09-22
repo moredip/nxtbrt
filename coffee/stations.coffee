@@ -17,12 +17,12 @@ getCurrentPosition = (options={})->
   deferred.promise
 
 renderStations = (stations)->
-  $list = $("<ul>")
-  stations.forEach (s)->
-    a = $("<a href='##{s.abbr}'>").text(s.name)
-    $("<li>").append(a).appendTo($list)
-
-  $('.stations').empty().append($list).show()
+  React.renderComponent(
+    NxtBrt.StationList(stations:stations),
+    document.getElementById('stations')
+  );
+  $('#stations').show();
+  return;
 
 stationsSortedByProximity = (stations,position)->
   currLocation = {
