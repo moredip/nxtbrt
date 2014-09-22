@@ -1,3 +1,5 @@
+window.NxtBrt ?= {}
+
 ETD_URL = "http://api.bart.gov/api/etd.aspx"
 API_KEY="MW9S-E7SL-26DU-VV8V"
 
@@ -26,15 +28,7 @@ loadEtds = (stationAbbr)->
   Q($.get( ETD_URL, {cmd: 'etd', orig: stationAbbr, key: API_KEY} ))
     .then(parseEtds)
 
-displayJustStationName = (stationName)->
-  $('.etds')
-    .empty()
-    .append( 
-      $('<h1>').append( $("<a>").attr("href","#").text(stationName) )
-    )
-    .show()
-
-humanMinutes = (min)->
+window.NxtBrt.humanMinutes = (min)->
   if min == 0
     "now"
   else if min == 1
@@ -42,25 +36,18 @@ humanMinutes = (min)->
   else
     "#{min} mins"
 
-appendEtds = (estimates)->
-  $list = $("<ul>")
-  estimates.forEach (e)->
-    $("<li>")
-      .text("#{e.dest.name}: #{humanMinutes(e.minutes)}")
-      .addClass("line-#{e.lineColor}")
-      .appendTo($list)
 
-  $('.etds')
-    .append($list)
-
-
-window.NxtBrt ?= {}
 window.NxtBrt.displayEtdsFor = (stationAbbr)->
   station = NxtBrt.lookupStationByAbbr(stationAbbr)
 
-  displayJustStationName(station.name)
+  $('#etds').show();
+  estimates = React.renderComponent(
+    NxtBrt.EstimatesList(stationName:station.name),
+    document.getElementById('etds')
+  );
 
   NxtBrt.showToast('finding departure times...')
-  loadEtds(stationAbbr)
-    .then( appendEtds )
-    .then( NxtBrt.hideToast )
+
+  loadEtds(stationAbbr).then (etds)-> 
+    estimates.setState({etds})
+    NxtBrt.hideToast()

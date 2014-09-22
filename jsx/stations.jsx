@@ -16,7 +16,7 @@ StationItem = React.createClass({
 NxtBrt.StationList = React.createClass({
   render: function() {
     var stationNodes = this.props.stations.map( function(station){
-      return <StationItem name={station.name} abbr={station.abbr}/>
+      return <StationItem name={station.name} abbr={station.abbr} key={station.abbr}/>
     });
     return (
       <ul>
