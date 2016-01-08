@@ -14,7 +14,8 @@ window.NxtBrt.displayEtdsFor = (stationAbbr,kioskMode)->
   );
 
   refresh = ->
-    NxtBrt.showToast('loading departure times...')
+    unless kioskMode 
+      NxtBrt.showToast('loading departure times...')
 
     NxtBrt.loadEtds(stationAbbr).then (etds)-> 
       estimates.setState({etds})
