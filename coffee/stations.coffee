@@ -24,15 +24,14 @@ renderStations = (stations)->
   $('#stations').show();
   return;
 
-stationsSortedByProximity = (stations,position)->
+stationsSortedByProximity = (stations, position)->
   currLocation = {
     lat: position.coords.latitude,
     long: position.coords.longitude
   }
-
   stationsWithDistance = stations.map (station)->
     $.extend(
-      {distance:haversine(currLocation, station)}, 
+      { distance: haversine(currLocation, station), walkingTime: getWalkingDistance(currLocation, station) },
       station)
 
   stationsWithDistance.sort (a,b)->
